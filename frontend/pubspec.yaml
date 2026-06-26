@@ -1,0 +1,29 @@
+name: safara
+description: Safara — Your Smart Kenya Travel Companion
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.9.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  dio: ^5.7.0
+  dash_chat_2: ^0.0.21
+  file_picker: ^8.1.7
+  shared_preferences: ^2.3.4
+  uuid: ^4.5.1
+  provider: ^6.1.2
+  google_fonts: ^6.2.1
+  flutter_markdown: ^0.7.4+3
+  intl: ^0.19.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true

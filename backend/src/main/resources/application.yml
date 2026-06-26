@@ -1,0 +1,40 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: safara-backend
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+
+safara:
+  uploads-dir: ./data/uploads
+  documents-metadata: ./data/documents.json
+  chroma:
+    base-url: http://localhost:8000
+    collection-name: safara-kenya
+  rag:
+    max-results: 5
+    min-score: 0.65
+    chunk-size: 400
+    chunk-overlap: 50
+    memory-max-messages: 20
+
+langchain4j:
+  ollama:
+    base-url: http://localhost:11434
+    chat-model:
+      model-name: llama3.2
+      temperature: 0.3
+      timeout: 120s
+    streaming-chat-model:
+      model-name: llama3.2
+      temperature: 0.3
+      timeout: 120s
+
+logging:
+  level:
+    com.safara: INFO
+    dev.langchain4j: WARN
