@@ -6,6 +6,7 @@ import com.safara.dto.SourceDto;
 import dev.langchain4j.data.document.Metadata;
 import dev.langchain4j.data.segment.TextSegment;
 import dev.langchain4j.rag.content.Content;
+import dev.langchain4j.rag.content.ContentMetadata;
 import dev.langchain4j.service.TokenStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,7 +69,13 @@ public class ChatService {
         }
         String text = segment.text();
         String excerpt = text.length() > 200 ? text.substring(0, 200) + "..." : text;
-        Double score = content.metadata() != null ? content.metadata().score() : null;
+        Double score = null;
+        if (content.metadata() != null) {
+            Object scoreValue = content.metadata().get(ContentMetadata.SCORE);
+            if (scoreValue instanceof Number number) {
+                score = number.doubleValue();
+            }
+        }
         return new SourceDto(fileName, excerpt, score);
     }
 }

@@ -24,12 +24,13 @@ safara:
 
 langchain4j:
   ollama:
-    base-url: http://localhost:11434
     chat-model:
+      base-url: http://localhost:11434
       model-name: llama3.2
       temperature: 0.3
       timeout: 120s
     streaming-chat-model:
+      base-url: http://localhost:11434
       model-name: llama3.2
       temperature: 0.3
       timeout: 120s

@@ -1,6 +1,7 @@
 services:
   chroma:
-    image: chromadb/chroma
+    # LangChain4j 1.0.0-beta3 uses Chroma REST API v1; latest Chroma images are v2-only.
+    image: chromadb/chroma:0.5.23
     container_name: safara-chroma
     ports:
       - "8000:8000"

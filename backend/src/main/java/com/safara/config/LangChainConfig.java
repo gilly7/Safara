@@ -4,8 +4,8 @@ import com.safara.service.SafaraAiService;
 import dev.langchain4j.data.segment.TextSegment;
 import dev.langchain4j.memory.chat.ChatMemoryProvider;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
-import dev.langchain4j.model.chat.ChatModel;
-import dev.langchain4j.model.chat.StreamingChatModel;
+import dev.langchain4j.model.chat.ChatLanguageModel;
+import dev.langchain4j.model.chat.StreamingChatLanguageModel;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.model.embedding.onnx.allminilml6v2.AllMiniLmL6V2EmbeddingModel;
 import dev.langchain4j.rag.DefaultRetrievalAugmentor;
@@ -15,7 +15,6 @@ import dev.langchain4j.rag.content.retriever.EmbeddingStoreContentRetriever;
 import dev.langchain4j.rag.query.transformer.CompressingQueryTransformer;
 import dev.langchain4j.service.AiServices;
 import dev.langchain4j.store.embedding.EmbeddingStore;
-import dev.langchain4j.store.embedding.chroma.ChromaApiVersion;
 import dev.langchain4j.store.embedding.chroma.ChromaEmbeddingStore;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -49,7 +48,6 @@ public class LangChainConfig {
         return ChromaEmbeddingStore.builder()
                 .baseUrl(chromaBaseUrl)
                 .collectionName(collectionName)
-                .apiVersion(ChromaApiVersion.V1)
                 .build();
     }
 
@@ -65,9 +63,10 @@ public class LangChainConfig {
     }
 
     @Bean
-    public RetrievalAugmentor retrievalAugmentor(ChatModel chatModel, ContentRetriever contentRetriever) {
+    public RetrievalAugmentor retrievalAugmentor(ChatLanguageModel chatLanguageModel,
+                                                 ContentRetriever contentRetriever) {
         return DefaultRetrievalAugmentor.builder()
-                .queryTransformer(new CompressingQueryTransformer(chatModel))
+                .queryTransformer(new CompressingQueryTransformer(chatLanguageModel))
                 .contentRetriever(contentRetriever)
                 .build();
     }
@@ -81,11 +80,11 @@ public class LangChainConfig {
     }
 
     @Bean
-    public SafaraAiService safaraAiService(StreamingChatModel streamingChatModel,
+    public SafaraAiService safaraAiService(StreamingChatLanguageModel streamingChatLanguageModel,
                                            RetrievalAugmentor retrievalAugmentor,
                                            ChatMemoryProvider chatMemoryProvider) {
         return AiServices.builder(SafaraAiService.class)
-                .streamingChatModel(streamingChatModel)
+                .streamingChatLanguageModel(streamingChatLanguageModel)
                 .retrievalAugmentor(retrievalAugmentor)
                 .chatMemoryProvider(chatMemoryProvider)
                 .build();

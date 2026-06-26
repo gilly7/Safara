@@ -21,7 +21,7 @@ public class StartupHealthChecker {
     private final DocumentMetadataService documentMetadataService;
 
     public StartupHealthChecker(@Value("${safara.chroma.base-url}") String chromaBaseUrl,
-                                @Value("${langchain4j.ollama.base-url}") String ollamaBaseUrl,
+                                @Value("${langchain4j.ollama.chat-model.base-url}") String ollamaBaseUrl,
                                 IngestService ingestService,
                                 DocumentMetadataService documentMetadataService) {
         this.chromaBaseUrl = chromaBaseUrl;
